@@ -9,23 +9,23 @@ module.exports = (sequelize) => {
       allowNull:false,
       primaryKey:true
     },
-    name: {
+    Name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    descripcion:{
+    Descripcion:{
       type:DataTypes.STRING,
       allowNull:false      
     },
-    Plataformas:{
+    Platforms:{
       type: DataTypes.STRING,
       allowNull:false
     },
-    Imagen:{
+    Image:{
       type:DataTypes.STRING,
       allowNull:false
     },
-    FechaDeLanzamiento:{
+    'Released Date':{
       type:DataTypes.DATE,
       allowNull:false
     },
@@ -33,5 +33,8 @@ module.exports = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull:false
     }
+  },
+  {
+    timestamps: false
   });
 };
