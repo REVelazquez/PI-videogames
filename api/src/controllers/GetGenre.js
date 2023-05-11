@@ -1,6 +1,6 @@
 const {Genre} = require('../db')
 
-const savedGenres= require('../Utils/GenresToDb')
+const savedGenres= require('../Helpers/GenresToDb')
 //La linea atenrior es para guardar los valores dados a Genre en la APi dentro de la db
 savedGenres();
 const getGenres= async (req, res)=>{

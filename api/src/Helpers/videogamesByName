@@ -1,0 +1,67 @@
+const axios= require ('axios')
+const {Videogame}= require('../db.js')
+const {API_KEY, URL_NAME}= process.env;
+const {Op}= require ('sequelize')
+//puedo usar el operador Op.iLike para buscar por las letras que me dan en la db
+const getVideogameByName = async (req, res)=>{
+
+//-----------Constantes y variables ----------//
+
+//dado que en los "results" la API tiene un apartado llamado "slug" donde aparece el nombre del
+//videojuego en minuscula, en la constante game guardo el nombre que fue dado por query para luego
+//usarla en axios
+
+    let allGames=[]
+    let foundedGames= []
+    const URL= `${URL_NAME}&key=${API_KEY}`
+    let game= req.query.name.toLowerCase()
+//axios usa la url especificada en .env con la variable "game" guardada previamente y devuelve todos los videjuegos
+
+
+//-----------Logica de la funcion------------//
+try {
+    const response= await axios.get(URL)
+//a todos los juegos los guardo en info, a diferencia del "videogamesById" debo usar results ya que no devolvera uno solo
+        const info=response.data.results
+//mientras luego los instancio en un array.
+        info.forEach(element => {
+            if(element.name.toLowerCase().includes(game)){
+                allGames.push({
+                    id:element.id,
+                    name:element.name,
+                    description: element.description, 
+                    platforms: element.platforms,
+                    image:element.background_image,
+                    released:element.released,
+                    rating:element.rating,
+                    genres:element.genres
+                })}});
+        if (allGames > 15){allGames=allGames.slice(0, 15)}
+        
+        
+        if(foundedGames.length < 15){     
+            let i= 15-foundedGames.length    
+            let j=0   
+            let videogamesByNameDb = await Videogame.findAll({
+                where:{
+                    include:{
+ // el Op.iLike hace insensible la busqueda de mayusculas, aunque ya todas estan en minusculas, ademas, se buscaran todas las filas que contengan la palabra
+ //definida por la constante "game"
+                        [Op.iLike]:`%${game}%`,
+                    }
+                }
+            })
+            videogamesByNameDb=videogamesByNameDb.slice(0, i)
+
+            while(j<videogamesByNameDb.length){
+                foundedGames.push(videogamesByNameDb[i])
+            }
+        }    
+        if(foundedGames.length !== 0) return res.status(200).json(foundedGames)
+        return res.status(404).send('Not Found')
+} catch (error) {
+    return {error:error}
+}   
+};
+
+module.exports=getVideogameByName;

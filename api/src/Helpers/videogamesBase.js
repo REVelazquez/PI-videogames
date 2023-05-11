@@ -2,20 +2,20 @@ const axios= require ('axios')
 const {Videogame, Genre}= require('../db.js')
 const {API_KEY, URL}= process.env
 
-// Ahora creo una funcion para guardar los videojuegos de la API en la DB
+// funcion para buscar en la api o revisar la DB si existe dicho juego
 const getVideogames = async()=>{
     let realURL= `${URL}?key=${API_KEY}`
+//defino la url donde se estara trabajando
     let allVideogames=[]
-    let videogame={}
+//este array es donde se guardara el videojuego en el caso de que no este en la DB pero si en la API
     try {
-//---------El '_' en la siguiente cb indica que no se usa dicho parametro, a su vez la constante es una forma de que se hace una consulta mediante axios a la api y se reciben arrays de 5 resultados.
-        const consult= Array.from({length:5}, async(_, index)=>{
+//con axios recupero datos de la api para luego enseñarlos
             let info= await axios.get(realURL);
-//con lo siguiente hago que la url pase a ser para los siguientes valores de resultados, y a la info se le busca una propiedad llamada results, que es el objeto que contiene las caracteristicas del videojuego
+//al cambiar la url por info.data.next hago que axios pueda volver a ejecutarse con el url que aparece en "next" dentro de la data en la API
             realURL=info.data.next;
-            info =info.data.results;            
-            info.forEach(element => {
-                videogame={
+            info =info.data.results;    
+// info.data.results son los juegos que tiene la api. Por ende a continuacion los instancio        
+            allVideogames= info.map(element => {return{
                     id:element.id,
                     name:element.name,
                     description: element.description, 
@@ -24,12 +24,8 @@ const getVideogames = async()=>{
                     released:element.released,
                     rating:element.rating,
                     genres:element.genres
-                }
-//al juego que esta siendo instanciado en "videogame" se lo pushea al array de allVideogames
-                allVideogames.push(videogame)
-            });
-     });
-    //ahora busco en la db si existe el videojuego
+                }});
+//una vez instanciados los juegos se busca que existan en la db y que estos se  relacionen con la tabla de generos
     const games=await Videogame.findAll({
         include: [{
             model:Genre,
@@ -39,8 +35,8 @@ const getVideogames = async()=>{
             }
         }]
     })
-    //si el juego, o mejor dicho el array de juegos existe en la db, se reemplaza el array por dicha info
-    allVideogames=games
+    //si el juego, o mejor dicho el array de juegos existe en la db, se reemplaza el array de allgames por dicha info
+    if (games.length) allVideogames=games
     //se retorna todos los juegos que esten dentro del array "allVideogames"
     return allVideogames
     } catch (error) {
