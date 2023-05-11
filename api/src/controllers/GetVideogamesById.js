@@ -8,9 +8,9 @@ const getGameById = async (req, res)=>{
 //--guardo el resultado de la funcion en una constante
         const videogame=await getVideogameById(idVideogame);
 //--retorno la constante en un formato json
-        return res.status(200).json(videogame)
+        return videogame
     } catch (error) {
-        return res.status(404).json({error:error})        
+        return {error:error.message}       
     }
 }
 

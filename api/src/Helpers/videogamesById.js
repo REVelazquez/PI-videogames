@@ -26,9 +26,9 @@ try {
 //si no existe, pero si existe en la api va a retornarlo
     if(videogame) return res.status(200).json(videogame)
 //si no se encuentra ni en la api ni en la db devuelve un error
-    return res.status(404).send("Not Found");
+    
 } catch (error) {
-    res.status(500).send('Server error')
+    return {error:error.message}
 }    
 }
 
