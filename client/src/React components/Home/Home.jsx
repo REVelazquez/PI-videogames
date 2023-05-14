@@ -1,22 +1,33 @@
-import Pagination from "../Pagination/Pagination";
+
 import Card from "../Card/Card";
-import { useSelector } from "react-redux";
-import {getVideogames} from '../../redux/actions'
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {getGame, getGenres} from '../../redux/actions'
 
 
 const Home = () =>{
-    const selector= useSelector;
-
-    const allVideogames= selector(state.allVideogames)
+    const dispatch = useDispatch()
     
+    useEffect(()=>{
+        dispatch(getGame())
+    }, []) 
+    let videogames=useSelector((state)=>state.allVideogames)
+
+    useEffect(()=>{
+        dispatch(getGenres())
+    }, [])
+    
+    let genres= useSelector(state=>state.genres)
+    console.log(genres);
+
+
     return(
         <div>
             {
-                allVideogames.map(({id, name, image, genres})=>{
+                videogames.map(({id, name, image, genres})=>{
                     return(
                         <Card 
                             key={id}
-                            id={id}
                             image={image}
                             name={name}
                             genres={genres?.name}
@@ -29,5 +40,4 @@ const Home = () =>{
 
 }
 
-
-export default Home;
+export default Home

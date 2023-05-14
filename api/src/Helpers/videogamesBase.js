@@ -23,7 +23,7 @@ const getVideogames = async()=>{
                     image:element.background_image,
                     released:element.released,
                     rating:element.rating,
-                    genres:element.genres
+                    genres:element.genres,
                 }});
 //una vez instanciados los juegos se busca que existan en la db y que estos se  relacionen con la tabla de generos
     const games=await Videogame.findAll({

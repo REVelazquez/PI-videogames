@@ -1,22 +1,34 @@
 import axios from 'axios';
 import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAMES, GENRE_FILTERED_GAMES, RATING_ORDERED_GAMES, LETTERS_ORDERED_GAMES } from './action-types'
 
+//URLS
+const URL='http://localhost:3001/videogames'
+const URL_Name = 'http://localhost:3001/videogames?name='
+const URL_ID = 'http://localhost:3001/videogames/'
+const URL_GENRES= 'localhost:3001/genres'
+
 
 //-----------------------Actions para rutas "gets"-----------------------//
 export const getGame = (name)=>{
     return async(dispatch) => {
         try{
             if(name){
-                let info = await axios.get(`/videogames/name?=${name}`);
-                payload=info.data;
+                let info = await axios.get(`${URL_Name}${name}`);
+                let results= []
+                results.push(info.data)
+                return dispatch({
+                    type: GET_GAMES,
+                    payload:results
+                })
             } else {
-                info = await axios.get(`/videogames`);
-                payload=info.data;                
+                let info = await axios.get(`${URL}`);   
+                let results= []
+                results.push(info.data)
+                return dispatch({
+                    type: GET_GAMES,
+                    payload:results
+                })
             }
-            dispatch({
-                type:GET_GAMES,
-                payload:payload
-            })
         } catch(error){
             return ({error:error.message});   
         }
@@ -24,7 +36,7 @@ export const getGame = (name)=>{
 }
 
 export const getGamesById= async(id)=>{
-    const url=`http://localhost:3001/videogames/${id}`
+    const url=`${URL_ID}${id}`
     return async (dispatch)=>{
         try {
             const info= await axios.get(url)
@@ -40,13 +52,12 @@ export const getGamesById= async(id)=>{
 }
 
 export const getGenres= async ()=>{
-    const url =`http://localhost:3001/genres`
         return async (dispatch)=>{
             try {
-                const info= await axios.get(url)
+                const info= await axios.get(URL_GENRES)
                 return dispatch({
                     type:GET_GENRES,
-                    payload: info.result
+                    payload: info.data.results
                 })
             } catch (error) {
                 return {error:error.message}
@@ -55,11 +66,11 @@ export const getGenres= async ()=>{
 }
 
 //-------------------------action para ruta post---------------------//
-export const postGames= async ()=>{
-    const url = `http:localhost:3001/videogames`
-    return async ()=>{
+export const postGames= async (payload)=>{
+    const url = URL
+    return async (dispatch)=>{
         try {
-            let info = await axios.post(url)
+            let info = await axios.post(url, payload)
             return dispatch({
                 type:POST_GAMES,
                 payload: info.data
