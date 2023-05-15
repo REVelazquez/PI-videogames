@@ -51,13 +51,13 @@ export const getGamesById= async(id)=>{
     
 }
 
-export const getGenres= async ()=>{
+export const getGenres=  ()=>{
         return async (dispatch)=>{
             try {
                 const info= await axios.get(URL_GENRES)
                 return dispatch({
                     type:GET_GENRES,
-                    payload: info.data.results
+                    payload: info.data
                 })
             } catch (error) {
                 return {error:error.message}

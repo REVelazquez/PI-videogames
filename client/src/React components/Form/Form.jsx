@@ -56,7 +56,7 @@ return(
         <input type="text" />
         <hr />
 
-        <button type='submit'>Submit!</button>
+        <button type='submit'>Submit!</button> <button>Cancel</button>
 
     </form>
 )

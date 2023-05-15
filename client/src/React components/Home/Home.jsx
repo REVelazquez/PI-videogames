@@ -30,7 +30,7 @@ const Home = () =>{
                             key={id}
                             image={image}
                             name={name}
-                            genres={genres?.name}
+                            genres={genres.name}
                         />
                     )
                 })
