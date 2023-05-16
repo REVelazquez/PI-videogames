@@ -5,7 +5,7 @@ import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAME
 const URL='http://localhost:3001/videogames'
 const URL_Name = 'http://localhost:3001/videogames?name='
 const URL_ID = 'http://localhost:3001/videogames/'
-const URL_GENRES= 'localhost:3001/genres'
+const URL_GENRES= 'http://localhost:3001/genres'
 
 
 //-----------------------Actions para rutas "gets"-----------------------//
@@ -14,19 +14,17 @@ export const getGame = (name)=>{
         try{
             if(name){
                 let info = await axios.get(`${URL_Name}${name}`);
-                let results= []
-                results.push(info.data)
+                
                 return dispatch({
                     type: GET_GAMES,
-                    payload:results
+                    payload:info.data
                 })
             } else {
                 let info = await axios.get(`${URL}`);   
-                let results= []
-                results.push(info.data)
+               
                 return dispatch({
                     type: GET_GAMES,
-                    payload:results
+                    payload:info.data
                 })
             }
         } catch(error){

@@ -3,15 +3,14 @@ import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAME
 
 const initialState={
     allVideogames:[],
-    genres: [],
-    filteredGames: []
+    genres:[],
+    filteredGames: [],
+    detail: []
 }
 
 //----en la siguiente linea inicio el reducer, pasandole por parametros el stado inicial y las actions destructuradas--//
 const reducer= (state = initialState, {type, payload})=>{
 
-//esta constante es para usar en los casos de ordenamiento y filtrado
-    const allGames = state.allVideogames
 // utilizo un switch para no hacer "if" encadenados o en cascadas.
     switch(type){
 ///casos de recuperacion de datos o de carga de los mismos
@@ -23,7 +22,7 @@ const reducer= (state = initialState, {type, payload})=>{
         case GET_GAMES_BY_ID:
             return{
                 ...state,
-                filteredGames:payload,
+                detail:payload,
             }
         case GET_GENRES:
             return{
@@ -37,20 +36,19 @@ const reducer= (state = initialState, {type, payload})=>{
 //casos de ordenamiento o filtrado
         case ORIGIN_FILTERED_GAMES:
         const filteredFrom =  
-            payload === 'db'
-            ? [...state.allVideogames].filter(games=>games.created)
-            : payload === 'api'
-            ? [...state.allVideogames].filter(games => !games.created)
+            payload === 'db' ? [...state.allVideogames].filter(games=>(isNaN(parseInt(games.id))))
+            : payload === 'api' ? [...state.allVideogames].filter(games =>!isNaN(parseInt(games.id)))
             :[...state.allVideogames]
         return {
             ...state,
             filteredGames:filteredFrom,
         }
         case GENRE_FILTERED_GAMES:
-            const genreFilteredGames = allGames.filter(game=> game.genre === payload)
+    
+            let genreFiltered =state.genres.find(genres=> genres.name === payload)
+            const genreFilteredGames = [...state.allVideogames].filter(game=> game?.genres?.name === genreFiltered?.name)
             if (payload === 'All') return{
                 ...state,
-                allGames,
             }
             else{
                 return{
@@ -65,7 +63,9 @@ const reducer= (state = initialState, {type, payload})=>{
                 orderedGames:
                 payload === 'A'
                 ?allVideogamesCopy.sort((a, b)=>a.rating - b.rating)
-                :allVideogamesCopy.sort((a, b)=>b.rating - a.rating)
+                :payload === 'D' 
+                ?allVideogamesCopy.sort((a, b)=>b.rating - a.rating)
+                :[...state.allVideogames]
             }
             case LETTERS_ORDERED_GAMES:
                 const allVideogamesCopy2 = [...state.allVideogames]
@@ -78,11 +78,12 @@ const reducer= (state = initialState, {type, payload})=>{
                     if(a.name.toLowerCase() > b.name.toLowerCase()) { return  1; }
                     return 0
                     })
-                    :allVideogamesCopy2.sort((a, b)=> {
+                    : payload === 'Z-A' ? allVideogamesCopy2.sort((a, b)=> {
                         if(a.name.toLowerCase() > b.name.toLowerCase()) { return -1; }
                         if(a.name.toLowerCase() < b.name.toLowerCase()) { return  1; }
                         return 0
                         })
+                    :[...state, state.allVideogames]
                 }           
         default:
            return { ...state};

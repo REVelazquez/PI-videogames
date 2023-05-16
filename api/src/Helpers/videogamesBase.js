@@ -36,7 +36,7 @@ const getVideogames = async()=>{
         }]
     })
     //si el juego, o mejor dicho el array de juegos existe en la db, se reemplaza el array de allgames por dicha info
-    if (games.length) allVideogames=games
+    if (games.length) allVideogames=[...games,...allVideogames]
     //se retorna todos los juegos que esten dentro del array "allVideogames"
     return allVideogames
     } catch (error) {

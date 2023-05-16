@@ -1,5 +1,5 @@
 const {Videogame, Genre}= require ('../db')
-const {Op } = require ('sequelize')
+const {Op } = require ('sequelize');
 const newVideogame=async (name, description, platforms, image, release, rating, genre)=>{    
     try {
 
@@ -21,6 +21,7 @@ const newVideogame=async (name, description, platforms, image, release, rating, 
         image:image,
         release:release,
         rating:rating,
+        created:true
 
     })
         const foundGenre= await Genre.findOne({
@@ -30,13 +31,17 @@ const newVideogame=async (name, description, platforms, image, release, rating, 
                 }
             },
         })
-        if(!foundGenre){
-            genreDb= await Genre.create({
-                    name:genre,
-            })
-            return genreDb
-        } else {genreDb = foundGenre}      
-        newGame.addGenre(genreDb)
+        if (!foundGenre) {
+            genreDb = await Genre.create({
+                name: genre,
+            });
+            newGame.addGenre(genreDb);
+            return newGame;
+        } else {
+            genreDb = foundGenre;
+            newGame.addGenre(genreDb);
+        }
+        Videogame.sync({alter:true})
         return newGame
     } catch (error) {
         return {error:error.message}

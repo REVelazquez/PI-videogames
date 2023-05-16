@@ -1,0 +1,11 @@
+.container{
+    position: relative;
+    justify-content: center;
+    display: flexbox;
+    flex-direction: column;
+}
+.image{
+    scale: 12.5%;
+    position: center;
+
+}
