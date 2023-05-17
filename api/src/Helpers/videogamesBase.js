@@ -4,7 +4,7 @@ const {API_KEY, URL}= process.env
 
 // funcion para buscar en la api o revisar la DB si existe dicho juego
 const getVideogames = async()=>{
-    let realURL= `${URL}?key=${API_KEY}`
+    let realURL= `${URL}?key=${API_KEY}&page_size=100`
 //defino la url donde se estara trabajando
     let allVideogames=[]
 //este array es donde se guardara el videojuego en el caso de que no este en la DB pero si en la API

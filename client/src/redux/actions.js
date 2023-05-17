@@ -33,14 +33,14 @@ export const getGame = (name)=>{
     }
 }
 
-export const getGamesById= async(id)=>{
+export const getGamesById= (id)=>{
     const url=`${URL_ID}${id}`
     return async (dispatch)=>{
         try {
             const info= await axios.get(url)
             return dispatch({
                 type:GET_GAMES_BY_ID,
-                payload:info
+                payload:info.data
             })
         } catch (error) {
             return {error:error.message}

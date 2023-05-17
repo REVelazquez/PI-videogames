@@ -1,0 +1,14 @@
+.genres{
+    font-size: large;
+    font-weight: bolder;
+}
+
+.genresOrder{
+    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(5, 200px);
+}
+
+.genresContainer{
+    display: grid;
+}

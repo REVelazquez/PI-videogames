@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom"
 import SearchBar from "../SearchBar/SearchBar"
 import { useLocation } from "react-router-dom"
-
+// import {useDispatch} from 'react-redux'
+// import getGamesByName from '../../redux/actions'
 const Nav = ({onSearch})=>{
     const location= useLocation()
 
 
-    
 return (
     
     <nav>
