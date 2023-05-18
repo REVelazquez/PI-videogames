@@ -7,9 +7,9 @@ const Card = ({id, name, genres, image, rating})=>{
         <div  key={id}  >
             <NavLink className={style.link} to={`/detail/${id}`}>
             <div className={style.container}>
-            <h3 >{name}</h3>
+            <h3 className={style.name}>{name}</h3>
             <img className={style.image} src={image} alt={`Img of ${name}`} />
-            <h3 >Genres</h3>
+            <h4 >Genres</h4>
             {
             genres?.map(genre => (
             <p>{genre.name}</p>
