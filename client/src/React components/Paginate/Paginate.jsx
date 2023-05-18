@@ -1,41 +1,13 @@
-const Paginate = ({
-  gamesPerPage,
-  allVideogamesSliced,
-  paginado,
-  previousPage,
-  nextpage
- })=>{
-  let pageNumbers=[]
-  let max= Math.ceil(allVideogamesSliced/gamesPerPage)
+const {useState } = require("react")
 
-  for (let i = 0; i < max; i++) {
-    pageNumber.push(i++);  
-  }
+const Paginate = ({handlePrev, handleNext, handleOnClick, pageNumbers, currentPage, nextBtn, prevBtn})=>{
 
   return(
     <div>
-        <nav className="dropdownmenu">
-          <ul>
-            <li onClick={()=>paginado(currentPage-1)}>
-                <a>Prev</a>
-            </li>
-            {pageNumbers && pageNumbers.map(num=>{
-              <li key={num}>
-                <li onClick={()=>paginado(num)}>
-                  <a >{num}</a>
-                </li>
-              </li>
-            })}
-            <li onClick={()=>paginado(currentPage+1)}>
-              <a >Next|</a>
-            </li>
-          </ul>
-          <hr />
-          <hr />
-          <hr />
-          <hr />
-        </nav>
+      <button key='P1' value={currentPage-1} onClick={handlePrev} disabled={prevBtn}>Prev</button>
+      {pageNumbers?.map(e=><button key={e} value={e} onClick={handleOnClick}>{e}</button>)}
+      <button key='N1' calue={currentPage+1}onClick={handleNext} disabled={nextBtn}>Next</button>
     </div>
   )
- }
- export default Paginate
+}
+export default Paginate

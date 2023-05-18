@@ -7,30 +7,76 @@ import Style from './Home.module.css'
 import Paginate from "../Paginate/Paginate"
 
 const Home = () =>{
-//constante de estado y variable de key
+//fucniones hechas constantes
+    
     const dispatch = useDispatch()
-    let z=1
-
-//estados y data generales
+    //estado para obtener data
     useEffect(()=>{
         dispatch(getGame());
         dispatch(getGenres());
     }, [dispatch]) 
-
-    const [order, setOrder]= useState('')
-
-
+//data
     let allVideogames=useSelector((state)=>state.allVideogames)
-
-    
-    let allVideogamesSliced=allVideogames.slice(0,101)
     let allGenres= useSelector(state=>state.genres)
+    let z=1  
+    //----- paginacion-----//
+    const [nextBtn, setNextBtn]=useState(false)
+    const [prevBtn, setPrevBtn]=useState(true)
+    const [currentPage, setCurrentPage]= useState(1)
+    const gamesPerPage=15
+
+    let initialLastIndex= currentPage*gamesPerPage
+    const [indexOfLastGame, setIndexOfLastGame]=useState(initialLastIndex)
+    let initialFirstIndex= indexOfLastGame-gamesPerPage
+
+    const [indexOfFirstGame, setIndexOfFirstGame]=useState(initialFirstIndex)
+    const currentGames = allVideogames.slice(indexOfFirstGame, Math.min(indexOfLastGame, allVideogames.length));
 
 
-//---------------------Paginacion------------------------//
-    //estados de paginacion
+    const maxPage = Math.ceil(allVideogames.length/gamesPerPage)
+    const minPage =1
+    const pageNumbers= Array.from({ length: maxPage }, (_, index) => index + 1);
 
-    //constantes de paginacion
+    const handleOnClick= (event)=>{
+        const selectedPage=parseInt(event.target.value)
+        if(selectedPage !== currentPage){
+            const newIndex = (selectedPage-1)*gamesPerPage
+            setCurrentPage(selectedPage)
+            setIndexOfFirstGame(newIndex)
+            setIndexOfLastGame(newIndex+gamesPerPage)
+
+        }
+    }
+
+    const handleNext= (event)=>{
+        if(currentPage !== maxPage){
+            const nextPage = currentPage+1
+            const newIndex=(nextPage+1)*gamesPerPage
+            setCurrentPage(nextPage);
+            setIndexOfFirstGame(newIndex);
+            setIndexOfLastGame(newIndex+gamesPerPage)
+            if(nextPage=== maxPage){
+                setNextBtn(true)
+            }else(setNextBtn(false))
+            setPrevBtn(false)
+        }
+    }
+
+    const handlePrev= event=>{
+        if(currentPage >1){
+            const prevPage= currentPage -1
+            const newIndex=(prevPage-1)*gamesPerPage
+            setCurrentPage(prevPage)
+            setIndexOfFirstGame(newIndex)
+            setIndexOfLastGame(newIndex+gamesPerPage)
+            if(prevPage === 1){
+                setPrevBtn(true)
+            }else(setPrevBtn(false))
+            setNextBtn(false)
+        }
+        
+    }
+        
 
   //----------Handlers para filtros y orden//
 
@@ -63,12 +109,13 @@ const Home = () =>{
                         )}
                     </select>
                 </div>
-                <select name="Origin Filter" onChange={handleCreatedFilter}>
-                    <option value={"All"}>All</option>
-                    <option value={'db'}>DB</option>
-                    <option value={"api"}>API</option>
-                </select>
-            </div>
+                <div>
+                    <select name="Origin Filter" onChange={handleCreatedFilter}>
+                        <option value={"All"}>All</option>
+                        <option value={'db'}>DB</option>
+                        <option value={"api"}>API</option>
+                    </select>
+                </div>
             <div>
                 <select onChange={handleOrderRanking}>
                     <option value="None">No order</option>
@@ -83,18 +130,20 @@ const Home = () =>{
                     <option value="Z-A">Decrecent</option> 
                 </select>
             </div>
-            <div >
-                <Paginate
-                    gamesPerPage={gamesPerPage}
-                    totalgames={allVideogamesSliced}
-                    paginado={paginado}
-                    previousPage={previousPage}
-                    nextPage={nextPage}
-                    />
+            <div>
+                <Paginate 
+                handlePrev={handlePrev}
+                handleNext={handleNext}
+                handleOnClick={handleOnClick}
+                pageNumbers={pageNumbers}
+                currentPage={currentPage}
+                nextBtn={nextBtn}
+                prevBtn={prevBtn}
+                />
             </div>
             <div className={Style.container}>
             {
-               allVideogames?.map(({id, name, image, genres, rating, platforms, release,description})=>{
+               currentGames?.map(({id, name, image, genres, rating, platforms, release,description})=>{
                     return(
                         <Card 
                             key={id}
@@ -110,8 +159,12 @@ const Home = () =>{
                     )
                 })
             }
-            <div></div>
+             <div>
+
             </div>
+            
+            </div>
+        </div>
         </div>
     )
 

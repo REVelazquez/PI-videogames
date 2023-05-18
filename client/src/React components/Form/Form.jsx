@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getGenres } from "../../redux/actions";
+import { getGenres, postGames } from "../../redux/actions";
 import Validation from "./Validation";
 import style from './Form.module.css'
 
@@ -8,65 +8,79 @@ const Form = () => {
   // Constantes y variables
   const dispatch = useDispatch();
   let allGenres= useSelector(state=>state.genres)
-  
-
-  let z= 1
+    let z= 1
   // Estados
-  const [inputs, setinputs] = useState({
+  const [genres, setGenres]=useState([])
+  const [disable, setDisable]= useState(true)
+
+  const [inputs, setInputs] = useState({
     name: "",
     description: "",
-    release: "",
-    image: "",
-    rating: '',
     platforms: "",
-    genres: [],
+    image: "",
+    release: "",
+    rating: '',
     created: true,
+    genres: [],
   });
-
   const [error, setError] = useState({
     name: "",
     description: "",
-    release: "",
-    image: "",
-    rating: "",
     platforms: "",
+    image: "",
+    release: "",
+    rating: "",
     genres: "",
   });
-  const [genres, setGenres]=useState([])
-
 
   useEffect(() => {
     dispatch(getGenres());
   }, [dispatch]);
 
-
-
 //handlers
 const handleOnChange = (event) => {
-    setinputs({
+    setInputs({
       ...inputs,
       [event.target.name]: event.target.value
     });
 
-    Validation({...inputs, [event.target.name]:event.target.value}, error, setError)
-  
+    setError(Validation({
+      ...inputs,
+      [event.target.name]: event.target.value
+    }))
+
+    if(inputs.name && inputs.description && inputs.rating && genres.length >0 ){ setDisable(false)}
 }
 
-
-const handleOnSubmit= (event)=>{
+const handleSubmit= (event)=>{
     event.preventDefault();
-}
+    console.log(inputs);
+  if(error.name || error.description || error.rating || genres.length === 0){
+    alert('Something is missing!')
 
+  }else dispatch(postGames(inputs))
+    setInputs({
+      name:'',
+      description:'',
+      platforms:'',
+      image:'',
+      release:'',
+      rating:'',
+      genres:[],
+      created:true,      
+    })
+    setGenres([])
+}
 
 const handleGenresChanges= event=>{
   if(event.target.checked){
     setGenres([...genres, event.target.value])
-    setinputs({...inputs, genres:[...genres, event.target.value]})
+    setInputs({...inputs, genres:[...genres, event.target.value]})
   }
 }
-console.log(inputs.name)
+
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="Name">Name</label>
         <input type="text" name="name" value={inputs.name} onChange={handleOnChange} />
@@ -117,7 +131,7 @@ console.log(inputs.name)
         <label htmlFor="">Platforms</label>
         <input type="text" onChange={handleOnChange} value={inputs.platforms} />
       </div>
-      <button type="submit" >Submit!</button>
+      <button type="submit" disabled={disable} >Submit!</button>
     </form>
   );
       }

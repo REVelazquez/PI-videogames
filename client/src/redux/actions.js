@@ -14,14 +14,12 @@ export const getGame = (name)=>{
         try{
             if(name){
                 let info = await axios.get(`${URL_Name}${name}`);
-                
                 return dispatch({
                     type: GET_GAMES,
                     payload:info.data
                 })
             } else {
                 let info = await axios.get(`${URL}`);   
-               
                 return dispatch({
                     type: GET_GAMES,
                     payload:info.data
@@ -64,7 +62,7 @@ export const getGenres=  ()=>{
 }
 
 //-------------------------action para ruta post---------------------//
-export const postGames= async (payload)=>{
+export const postGames= (payload)=>{
     const url = URL
     return async (dispatch)=>{
         try {

@@ -1,16 +1,16 @@
 import { Link } from "react-router-dom"
 import SearchBar from "../SearchBar/SearchBar"
 import { useLocation } from "react-router-dom"
-// import {useDispatch} from 'react-redux'
-// import getGamesByName from '../../redux/actions'
-const Nav = ({onSearch})=>{
-    const location= useLocation()
 
+
+const Nav = ()=>{
+    const location= useLocation()
+    
 
 return (
     
     <nav>
-        <SearchBar onSearch= {onSearch} />
+        <SearchBar />
         
         {location.pathname !== '/form' && <Link to= '/form'> <button>Submit new Game</button></Link> }
 

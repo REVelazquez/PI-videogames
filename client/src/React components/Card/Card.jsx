@@ -7,7 +7,7 @@ const Card = ({id, name, genres, image, rating})=>{
         <div className={style.container} key={id}  >
             <Link to={`/detail/${id}`}>
             <h2 >{name}</h2>
-            <img className={style.image} src={image} alt={`Image of ${name}`} />
+            <img className={style.image} src={image} alt={`Img of ${name}`} />
             <h1 >Genres</h1>
             {
             genres?.map(genre => (

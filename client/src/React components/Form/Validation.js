@@ -1,27 +1,36 @@
 
-const Validation = (inputs, error, setError)=>{
-
+const Validation = (inputs)=>{
+  const errors={}
   // Errores en nombre
-  if(inputs.name.length < 3){
-    setError({...error, name:'The name is too short!'})
+  if(!inputs.name){
+    errors.name= "This field is obligatory"
+  }else if(inputs.name.length <3){
+    errors.name='The name is too short'
+  }else if(inputs.name.length >70){
+    errors.name='The name is too large'
+  }else{
+    errors.name= ''
   }
-  else if (inputs.name.length > 70) {
-    setError({ ...error, name: 'The name of the game is too large!' });
-  }else {setError({...error, name:''})}
-  // Errores en descripcion
-  if(inputs.description.length <= 10){
-    setError({...error, description:'The description is too short!'})
+  //errores en description
+  if(!inputs.description){
+    errors.description='This field is obligatory'
+  }else if(inputs.description.length <10){
+    errors.description='The description is too short'
+  }else if(inputs.description.length >400){
+    errors.description='The description is too large'
+  }else{
+    errors.description=''
   }
-  else if (inputs.description.length > 400) {
-    setError({ ...error, description: 'The description is too large!' });
-  }else{setError({...error, description:''})}
-  // Errores en rating
-  if (inputs.rating < 0) {
-    setError({ ...error, rating: "Even if you don't like the game, minimum rating is 0" });
+  //errores en rating
+  if(!inputs.rating){
+    errors.rating='This field is obligatory'
+  }else if(inputs.rating < 0){
+    errors.rating="Even if you don't like the game the min rating is 0"
+  }else if(inputs.rating >5){
+    errors.rating='Sadly the max rating is 5'
+  }else{
+    errors.rating= ''
   }
-  else if (inputs.rating > 5) {
-    setError({ ...error, rating: 'Sadly the max rate is 5' });
-  }else{ setError({...error, rating: ''})}
+  return errors
 }
-
 export default Validation;

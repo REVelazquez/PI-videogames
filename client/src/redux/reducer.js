@@ -1,5 +1,5 @@
 
-import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAMES, GENRE_FILTERED_GAMES, RATING_ORDERED_GAMES, LETTERS_ORDERED_GAMES } from './action-types'
+import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAMES, GENRE_FILTERED_GAMES, RATING_ORDERED_GAMES, LETTERS_ORDERED_GAMES, GET_GAMES_BY_NAME } from './action-types'
 
 const initialState={
     allVideogames:[],
@@ -18,7 +18,14 @@ const reducer= (state = initialState, {type, payload})=>{
             return{
             ...state,
             allVideogames:payload,
+            filteredGames:payload,
+
         }
+        case GET_GAMES_BY_NAME:
+            return{
+                ...state,
+                filteredGames:payload
+            }
         case GET_GAMES_BY_ID:
             return{
                 ...state,
