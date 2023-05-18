@@ -28,7 +28,22 @@ try {
     if(foundedGames.length>15){
         foundedGames=foundedGames.slice(0, 15);
     }
-    if (foundedGames.length !== 0) return foundedGames
+    const allVideogames = foundedGames.map((element) => {
+        return {
+          id: element.id,
+          name: element.name,
+          description: element.description,
+          platforms: element.platforms,
+          image: element.background_image,
+          released: element.released,
+          rating: element.rating,
+          genres: element.genres,
+        };
+      });
+  
+    if (allVideogames.length !== 0) {
+        return allVideogames;
+    }
     return 'Not Found'
 }catch(error){
     return {error:error.message}

@@ -1,9 +1,18 @@
 .container{
-    justify-content: center;
+    justify-content:flex-start;
     margin-left: 2em;
+    margin-right: 2em;
+    border-color: aliceblue;
+    background-color: black;
+    border-radius: 3em;
+    size-adjust:initial;
+}
+.link{
+    text-decoration: none;
+    color: aliceblue;
 }
 .image{
-    width: 10rem;
-    height: 10rem;
+    width: 50%;
+    height: 50%;
     margin-top: 1px;
 }

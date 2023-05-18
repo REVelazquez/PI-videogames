@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAMES, GENRE_FILTERED_GAMES, RATING_ORDERED_GAMES, LETTERS_ORDERED_GAMES } from './action-types'
+import {GET_GAMES, GET_GAMES_BY_ID, GET_GENRES, POST_GAMES, ORIGIN_FILTERED_GAMES, GENRE_FILTERED_GAMES, RATING_ORDERED_GAMES, LETTERS_ORDERED_GAMES, GET_GAMES_BY_NAME } from './action-types'
 
 //URLS
 const URL='http://localhost:3001/videogames'
@@ -14,8 +14,9 @@ export const getGame = (name)=>{
         try{
             if(name){
                 let info = await axios.get(`${URL_Name}${name}`);
+                console.log(info)
                 return dispatch({
-                    type: GET_GAMES,
+                    type: GET_GAMES_BY_NAME,
                     payload:info.data
                 })
             } else {
@@ -81,15 +82,15 @@ export const postGames= (payload)=>{
 //--------------------------actions de ordenamiento--------------------//
 
 export const filterGamesByGenre = (genre)=>{
-    return {type:GENRE_FILTERED_GAMES, payload:genre}
+    return  {type:GENRE_FILTERED_GAMES, payload:genre}
 }
 
 export const filterGamesByOrigin = (origin)=>{
-    return {type:ORIGIN_FILTERED_GAMES, payload: origin}
+    return  {type:ORIGIN_FILTERED_GAMES, payload:origin}
 }
 
 export const orderGamesByLetter = (letters)=>{
-    return {type:LETTERS_ORDERED_GAMES, payload: letters}
+    return  {type:LETTERS_ORDERED_GAMES, payload: letters}
 }
 
 export const orderGamesByRating = (rating)=>{

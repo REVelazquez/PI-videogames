@@ -59,6 +59,7 @@ const handleSubmit= (event)=>{
     alert('Something is missing!')
 
   }else dispatch(postGames(inputs))
+    alert('Your game has been sumited!')
     setInputs({
       name:'',
       description:'',
@@ -76,9 +77,12 @@ const handleGenresChanges= event=>{
   if(event.target.checked){
     setGenres([...genres, event.target.value])
     setInputs({...inputs, genres:[...genres, event.target.value]})
+  }else {
+    const updatedGenres = genres.filter((g) => g !== genres);
+    setGenres(updatedGenres);
+    setInputs({ ...inputs, genres: updatedGenres });
+    } 
   }
-}
-
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -134,5 +138,5 @@ const handleGenresChanges= event=>{
       <button type="submit" disabled={disable} >Submit!</button>
     </form>
   );
-      }
+}
 export default Form;

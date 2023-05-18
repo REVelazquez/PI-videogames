@@ -1,6 +1,35 @@
-.container{
+.wrapper{
+    display: flex;
+}
+
+.cardsContainer{
     justify-content: center;
     display: grid;
     grid-template-columns: repeat(5, 300px);
     size: 50%;
+}
+
+
+.ordNFiltCont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.ordNFilt{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.selects{
+    border-radius: 5%;
+    border-color: lightgray;
+    background-color: black;
+    color: grey;
+    font-weight: bold;
+}
+.paginateContainer{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
