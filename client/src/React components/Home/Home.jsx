@@ -17,7 +17,7 @@ const Home = () =>{
     
 
     //data
-    let allVideogames=useSelector((state)=>state.allVideogames)
+    let allVideogames=useSelector((state)=>state.filteredGames)
     let allGenres= useSelector(state=>state.genres)  
 
     //----------Handlers para filtros y orden//
@@ -97,6 +97,7 @@ const Home = () =>{
                 <div className={Style.ordNFiltCont}>
                 <div key={'Filter genre'} className={Style.ordNFilt}>
                 <select name="genre-filter" className={Style.selects} defaultValue={'All'} onChange={handleGenreFilter}>
+                        <option value="All">None</option>
                         {allGenres.length > 0 && allGenres.map((genre, index) => {
                              return (
                                 <option value={genre.name} key={index}>{genre.name}</option>

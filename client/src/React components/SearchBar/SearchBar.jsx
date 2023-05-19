@@ -17,8 +17,8 @@ const SearchBar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setName("");
-
     if (name !== "") {
+      if(name === 23 || name === 'do a barrel roll' || name === 'Do a barrel roll')
       dispatch(getGame(name));
       navigate(`/search?name=${name}`);
     } else {
@@ -27,15 +27,15 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+      <form  onSubmit={handleSubmit}>
       <input
         placeholder="Search...."
         type="search"
         onChange={handleChange}
         value={name}
       />
-      <button onClick={handleSubmit}>Search</button>
-    </div>
+      <button type="submit" >Search</button>
+      </form>
   );
 };
 

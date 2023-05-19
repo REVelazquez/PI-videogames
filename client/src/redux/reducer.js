@@ -38,7 +38,7 @@ const reducer= (state = initialState, {type, payload})=>{
         case POST_GAMES:
             return{
                 ...state,
-                allVideogames:[...state.allVideogames, ...payload]
+                allVideogames:[...state.filteredGames, ...payload]
             }
 //casos de ordenamiento o filtrado
         case ORIGIN_FILTERED_GAMES:
@@ -51,16 +51,19 @@ const reducer= (state = initialState, {type, payload})=>{
               : payload === 'API' ? allVideogamesAPI
               : [...state.allVideogames]
           };
-        case GENRE_FILTERED_GAMES:
-          const videogamesCopy = [...state.allVideogames];
-          const filterGenres =
-            payload === 'All'
-              ? videogamesCopy
-              : videogamesCopy.filter((game) => game.genres.includes(payload));
-          return {
-            ...state,
-            filteredGames: filterGenres,
-          };
+          case GENRE_FILTERED_GAMES:
+            let filterGenre = [];
+            if (payload === 'All') {
+                filterGenre = [...state.allVideogames];
+            } else {
+                filterGenre = [...state.allVideogames].filter((game) =>
+                    game.genres.some((genre) => genre.name === payload)
+                );
+            }
+            return {
+                ...state,
+                filteredGames: filterGenre,
+            };
         case RATING_ORDERED_GAMES:
           const allVideogamesCopy = [...state.allVideogames];
           const orderedGames =
