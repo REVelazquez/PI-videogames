@@ -1,48 +1,27 @@
+const { Op } = require('sequelize')
 const {Videogame, Genre}= require ('../db')
-const {Op } = require ('sequelize');
 const newVideogame=async (name, description, platforms, image, release, rating, genre)=>{    
     try {
 
-    let genreDb = null;
-    let newGame;
-    const foundVideogame = await Videogame.findOne({
+//con este metodo de sequelize me aseguro de que si hay un videojuego en la db lance el error, ya que devuelve un 
+//valor que no es booleano de otra forma crea un videojuego en la db con los valores recibidos por "default"
+    let [newGame, boolean] = await Videogame.findOrCreate({
         where:{
-            name: name            
-        },
-    })  
-    console.log(name, description, rating, genre)
-    if(foundVideogame) return 'The videogame already exists!';
-    if(!name || !description || !rating || !genre) throw Error('You need an obligatory data') 
-
-    newGame = await Videogame.create({
-        name:name,
-        description:description,
-        platforms:platforms,
-        image:image,
-        release:release,
-        rating:rating,
-        created:true
-
-    })
-        const foundGenre= await Genre.findOne({
-            where: {
-                name:{
-                    [Op.iLike]: `%${genre}%`
-                }
+            name:{
+                [Op.iLike]: `%${name}`
             },
-        })
-        if (!foundGenre) {
-            genreDb = await Genre.create({
-                name: genre,
-            });
-            newGame.addGenre(genreDb);
-            return newGame;
-        } else {
-            genreDb = foundGenre;
-            newGame.addGenre(genreDb);
-        }
-        Videogame.sync({alter:true})
-        return newGame
+        },
+        defaults:{
+            name,
+            description,
+            platforms,
+            image,
+            release,
+            rating,
+            genre,
+        },
+    })
+    if(!boolean) throw Error('The fame already exist')
     } catch (error) {
         return {error:error.message}
     }
