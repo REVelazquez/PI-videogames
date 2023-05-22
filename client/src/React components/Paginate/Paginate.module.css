@@ -1,0 +1,40 @@
+@import url('../../Stetic/Fonts/Fonts.css');
+.lateralMov{
+    font-family: "Bruno Ace", sans-serif;
+    border-radius: 3em;
+    border-color: silver;
+    color:purple;
+    font-weight: 600;
+    background-color: black;
+}
+.lateralMov:hover{
+    color: black;
+    border-color: purple;
+    background-color: silver;
+}
+.lateralMov:disabled{
+    color: rgb(84, 23, 84);
+    background-color: rgb(28, 27, 27);
+    border-color: rgb(118, 111, 111) ;
+}
+
+.buttons{
+    font-family: "Bruno Ace", sans-serif;
+    border-radius: 100%;
+    border-color: silver;
+    color:purple;
+    font-weight: 600;
+    background-color: black;
+    margin-left: 0.125em;
+    margin-right: 0.125em;
+}
+.buttons:hover{
+    color: black;
+    border-color: purple;
+    background-color: silver;
+}
+.buttons:disabled{
+    color: rgb(84, 23, 84);
+    background-color: rgb(28, 27, 27);
+    border-color: rgb(118, 111, 111) ;
+}

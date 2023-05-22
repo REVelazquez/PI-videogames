@@ -1,0 +1,101 @@
+ @import url('../../Stetic/Fonts/Fonts.css');
+.image {
+    width: 20em;
+    height: 20em;
+    object-fit: cover;
+    border-radius: 5em;
+}
+.containerId{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.details {
+    display: grid;
+    grid-template-columns: repeat(7 10em);
+    grid-template-rows: repeat(2 10em);
+    gap: 2em;
+}
+
+.name{
+    background: linear-gradient(180deg, rgba(73, 68, 78, 1) 0%, rgba(212, 212, 212, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: .125em;
+    font-family: 'Cinzel', sans-serif;
+    font-weight: bold;
+}
+.ArrayTittles{
+    background: linear-gradient(180deg, rgba(73, 68, 78, 1) 0%, rgba(212, 212, 212, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 0.25em;
+    margin-bottom: 0.12em;
+    font-family: 'Cinzel', sans-serif;
+    font-weight: bold;
+}
+.arrayCont{
+    justify-content: center;
+    margin-left: 40%;
+    margin-right: 30%;
+    display: grid;
+    grid-template-columns: repeat(4, 10em);
+    margin-top: 0.001em;
+}
+
+.arrays{
+    margin-top: 0.25em;
+    color: silver;
+    font-family: "Bruno Ace";
+    font-weight: 400;
+}
+.descTittle{
+    background: linear-gradient(180deg, rgba(73, 68, 78, 1) 0%, rgba(212, 212, 212, 1) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 0.25em;
+    margin-bottom: 0.12em;
+    font-family: 'Cinzel', sans-serif;
+    font-weight: bold;
+}
+.descrip{
+    width: 75%;
+    justify-content: center;
+    margin-left: 15em;
+    color: silver;
+    margin-bottom: 0.25em;
+    font-family: 'Bruno Ace';
+    font-size: small;
+}
+
+.numbCont{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 0.1em;
+    margin-bottom: .1em;
+}
+
+.numbTittle{
+    size:small;
+    color: gray;
+    font-weight: 600;
+    margin-top: 0.125em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 0.5em;
+    font-family: 'Cinzel', sans-serif;
+    font-weight: bold;
+}
+.numbers{
+    margin-top: 0.125em;
+    margin-bottom: 1em;
+    margin-left: 1em;
+    margin-right: 0.5em;
+    font-weight: bolder;
+    font-family: 'Cinzel', sans-serif;
+}
+

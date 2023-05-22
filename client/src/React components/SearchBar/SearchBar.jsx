@@ -1,41 +1,54 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getGame } from "../../redux/actions";
-import { useNavigate } from "react-router-dom";
+import Style from './SearchBar.module.css'
 import DoABarrelRoll from "./DoABarrelRoll";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const location = useLocation()
+  const navigate= useNavigate()
   const [name, setName] = useState("");
-
   const handleChange = (event) => {
     event.preventDefault();
     setName(event.target.value);
   };
+  const [loading, setLoading]= useState(false)
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setName("");
-    if (name !== "") {
-      if(name === 23 || name === 'do a barrel roll' || name === 'Do a barrel roll')
-      dispatch(getGame(name));
-      navigate(`/search?name=${name}`);
-    } else {
-      alert("There's no videogame with that word!");
+    if(+name === 23 || name.toLowerCase() === "do a barrel roll"){
+      DoABarrelRoll()
     }
+    console.log(DoABarrelRoll);
+    if (name !== "") {
+      setLoading(true)
+      location.pathname !== '/home' && navigate('/home')
+      dispatch(getGame(name))
+      .then(()=>setLoading(false));
+      setName('')
+
+
+    } else {
+      alert("A search, to perform,Enter a query");
+    }
+    
   };
 
   return (
-      <form  onSubmit={handleSubmit}>
+    <form  onSubmit={handleSubmit}  key='searchContainer' className={Style.container}>
       <input
+      key='SearchInput'
         placeholder="Search...."
         type="search"
         onChange={handleChange}
         value={name}
+        className={Style.input}
       />
-      <button type="submit" >Search</button>
-      </form>
+      <button key='SearchButton'  className={Style.search} type='submit' >Search</button>
+    </form>
   );
 };
 

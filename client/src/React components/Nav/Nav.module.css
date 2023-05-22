@@ -1,6 +1,106 @@
+@import url('../../Stetic/Fonts/Fonts.css');
+.linkForm.navBtn1:hover:disabled{
+    cursor: auto;
+}
 .nav{
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin-top: 1em;
+}
+
+.navBtn1{
+    margin-right: 1em;
+    margin-left: 1em;
+    background-image: url('../../Stetic/Images/kisspng-computer-icons-scalable-vector-graphics-symbol-cli-plus-sign-5aaad88d6ee9a1.3132124515211459974543.png');
+    background-color:purple;
+    background-repeat: no-repeat;
+    background-size: 2em 2em;
+    background-position: center;
+    height: 2.5em;
+    width: 2.5em;
+    border-radius: 0.70em;
+    border-color: purple;
+    font-family: "Cizel";
+    font-weight: bold;
+    text-indent: -9999px;
+    color:gray; }
+
+
+.navBtn1:hover{
+    text-indent: 0px;
+    height: 2.5em;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.navBtn1:disabled{
+    background-color: rgb(64, 4, 64); 
+    height: 2.5em;
+    width: 2.5em;
+    text-indent: -9999px;
+    cursor:auto;
+    border-color: black;
+}
+
+.navBtn2{
+    background-color: purple;
+    background-image: url('../../Stetic/Images/HomeIcon.png');
+    background-repeat: no-repeat;
+    background-size: 2em 2em;
+    background-position: center;
+    height: 2.5em;
+    width: 2.5em;
+    text-indent: -9999px;
+    border-radius: 0.7em;
+    border-color: silver;
+    color: black;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-family: "Cizel";
+    font-weight: bold;
+}
+.navBtn2:hover{
+    text-indent: 0px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.navBtn2:disabled{
+    background-color: rgb(64, 4, 64); 
+    height: 2.5em;
+    width: 2.5em;
+    text-indent: -9999px;
+    cursor:auto;
+    border-color: grey;
+}
+.navBtn3{
+    background-color: grey;
+    background-image: url('../../Stetic/Images/Signo\ About.png');
+    background-repeat: no-repeat;
+    background-size: 2em 2em;
+    background-position: center;
+    height: 2.5em;
+    width: 2.5em;
+    text-indent: -9999px;
+    border-radius: 0.7em;
+    border-color: purple;
+    color: black;
+    margin-left: 1em;
+    margin-right: 1em;
+    font-family: 'Cizel', sans-serif;
+    font-weight: bold;
+}
+.navBtn3:hover{
+    text-indent: 0px;
+    width: fit-content;
+    cursor: pointer;
+}
+.navBtn3:disabled{
+    background-color: rgb(98, 96, 96);
+    height: 2.5em;
+    width: 2.5em;
+    text-indent: -9999px;
+    cursor: auto;
+    border-color: rgb(85, 2, 85);
 }

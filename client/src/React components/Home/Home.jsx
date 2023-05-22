@@ -1,45 +1,65 @@
 
-import Card from "../Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {filterGamesByGenre, filterGamesByOrigin, getGame, getGenres, orderGamesByLetter, orderGamesByRating} from '../../redux/actions'
-import Style from './Home.module.css'
+import Card from "../Card/Card";
 import Paginate from "../Paginate/Paginate"
+import Loader from "../Loader/Loader";
+import Style from './Home.module.css'
 
 const Home = () =>{
 
     const dispatch = useDispatch()
     //estados 
+    const [loading, setLoading]=useState(false)
     useEffect(()=>{
+        setLoading(true)
         dispatch(getGame());
-        dispatch(getGenres());
+        dispatch(getGenres())
+        .then(()=>setLoading(false))
     }, [dispatch]) 
     
 
     //data
+    
+
     let allVideogames=useSelector((state)=>state.filteredGames)
     let allGenres= useSelector(state=>state.genres)  
 
+    //boton para reiniciar el estado luego de una busqueda
+    const handleBack=event=>{
+        event.preventDefault();
+        setLoading(true)
+        dispatch(getGame())
+        .then(()=>setLoading(false))
+    }
+
     //----------Handlers para filtros y orden//
     
-      const handleGenreFilter = (event)=>{
-          dispatch(filterGamesByGenre(event.target.value))
+    const handleGenreFilter = (event)=>{
+        dispatch(filterGamesByGenre(event.target.value))
+        setCurrentPage(1)
+        
+
       }
       const handleCreatedFilter = (event)=>{
           dispatch(filterGamesByOrigin(event.target.value))
-    
-      }
-      const handleOrderRanking= event=>{
-          dispatch(orderGamesByRating(event.target.value));
-      }
-      const handleOrderLetters = (event)=>{
-          dispatch(orderGamesByLetter(event.target.value))
-    
-      }
-
-    //----- paginacion-----//
-
-//Pagina actual y juegos por pagina
+          
+          
+        }
+        const handleOrderRanking= event=>{
+            dispatch(orderGamesByRating(event.target.value));
+            
+        }
+        const handleOrderLetters = (event)=>{
+            dispatch(orderGamesByLetter(event.target.value))
+            
+            
+        }
+        
+        //----- paginacion-----//
+        
+        //Pagina actual y juegos por pagina
     const [currentPage, setCurrentPage]= useState(1)
     const gamesPerPage=15
 
@@ -78,8 +98,8 @@ const Home = () =>{
           setIndexOfFirstGame(newIndex);
           setIndexOfLastGame(newIndex + gamesPerPage);
         }
-      };
-      
+    };
+    
       const handlePrev = (event) => {
         if (currentPage > 1) {
           const prevPage = currentPage - 1;
@@ -89,12 +109,15 @@ const Home = () =>{
           setIndexOfLastGame(newIndex + gamesPerPage);
         }
       };
-      
+      if(loading || !allVideogames.length){
+        return <Loader/>
+      }     
         
     return(
         <div className={Style.wrapper}>
             <div >
                 <div className={Style.ordNFiltCont}>
+                <p className={Style.conectors}>Filter: by genre</p>
                 <div key={'Filter genre'} className={Style.ordNFilt}>
                 <select name="genre-filter" className={Style.selects} defaultValue={'All'} onChange={handleGenreFilter}>
                         <option value="All">None</option>
@@ -105,6 +128,7 @@ const Home = () =>{
                         })} 
                     </select>
                 </div>
+                <p className={Style.conectors}>by creation</p>
                 <div key={'Filter orig'} className={Style.ordNFilt}>
                     <select name="Origin Filter" className={Style.selects} onChange={handleCreatedFilter}>
                         <option value={"All"}>All</option>
@@ -112,13 +136,15 @@ const Home = () =>{
                         <option value={"API"}>API</option>
                     </select>
                 </div>
+                <p className={Style.conectors}>Order: by rate</p>
                 <div key={'rate order'} className={Style.ordNFilt}>
                     <select name='Rating Order'className={Style.selects}  onChange={handleOrderRanking}>
                         <option value="None">No order</option>
-                        <option value="A">Ranked up</option>
-                        <option value="D">Ranked down</option>
+                        <option value="A">Crescend Rate</option>
+                        <option value="D">Descending Rate</option>
                     </select>            
                 </div>
+                <p className={Style.conectors}>by letters</p>
                 <div key={'alph order'} className={Style.ordNFilt}>
                     <select name='Alph order'className={Style.selects} onChange={handleOrderLetters}>
                         <option value="None">No order</option>
@@ -127,17 +153,17 @@ const Home = () =>{
                     </select>
                 </div>
                 </div>
+            {allVideogames.length===15 && <button onClick={handleBack} className={Style.recharge}>Go Back</button>}
             <div className={Style.paginateContainer}>
-                <Paginate 
+               {allVideogames.length >15 && <Paginate 
                 handlePrev={handlePrev}
                 handleNext={handleNext}
                 handleOnClick={handleOnClick}
                 pageNumbers={pageNumbers}
                 currentPage={currentPage}
                 maxPage={maxPage}
-                // nextBtn={nextBtn}
-                // prevBtn={prevBtn}
-                />
+
+                />}
             </div>
             <div className={Style.cardsContainer}>
             {
@@ -161,6 +187,17 @@ const Home = () =>{
 
             </div>
             
+            </div>
+            <div className={Style.paginateContainer}>
+                <Paginate 
+                handlePrev={handlePrev}
+                handleNext={handleNext}
+                handleOnClick={handleOnClick}
+                pageNumbers={pageNumbers}
+                currentPage={currentPage}
+                maxPage={maxPage}
+
+                />
             </div>
         </div>
         </div>

@@ -1,3 +1,4 @@
+
 const { Op } = require('sequelize')
 const {Videogame, Genre}= require ('../db')
 const newVideogame=async (name, description, platforms, image, release, rating, genre)=>{    

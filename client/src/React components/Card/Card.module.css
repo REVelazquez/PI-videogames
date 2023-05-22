@@ -1,21 +1,71 @@
+@import url('../../Stetic/Fonts/Fonts.css');
 .container{
     justify-content:flex-start;
     margin-left: 2em;
     margin-right: 2em;
     border-color: aliceblue;
-    background-color: black;
-    border-radius: 3em;
-    size-adjust:initial;
+    background: rgba(42, 38, 38, 0.882);
+    border-width: 5px;
+    border-style: groove;
+    border-radius: 1em;
+    width: 15rem;
+    height: 25rem;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+.container:hover{
+    background-color: rgb(83, 4, 83);
+    border-color: rgb(152, 40, 152);
 }
 .link{
     text-decoration: none;
-    color: aliceblue;
 }
 .image{
-    width: 50%;
-    height: 50%;
+    width: 8.25rem ;
+    height: 8.25rem;
+    object-fit: cover;
     margin-top: 1px;
 }
 .name{
     color: rgba(152, 148, 148, 0.733);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 0.25em;
+    font-size:medium;
+    font-family: "Cinzel", sans-serif;
+
+}
+.tittleGenres{
+    margin-bottom: 0.25em;
+    margin-top: 0.25em;
+    color: rgba(152, 148, 148, 0.733);;
+    font-weight: 750;
+    font-family: "Cinzel", sans-serif;
+    size: medium;
+}
+.genreCont{
+    display: grid;
+    margin-bottom: 0.125em;
+}
+.genres{
+    margin-top: 0.25em;
+    margin-bottom: 0.125em;
+    color: silver;
+    font-weight:600;
+    font-size:small;
+    font-family: "Tourney", sans-serif;
+}
+.tRating{
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+    color: rgba(152, 148, 148, 0.733);
+    font-family: "Cinzel", sans-serif;
+    font-size: large;
+}
+.rating{
+    margin-top: 0.25em;
+    color: silver;
+    font-size: medium;
+    font-family: "Cinzel", sans-serif;
 }

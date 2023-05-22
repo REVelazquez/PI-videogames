@@ -1,0 +1,24 @@
+@import url('../../Stetic/Fonts/Fonts.css');
+.container{
+    justify-content: center;
+    background-image: url('../../Stetic/Animations/KirbyLoader.gif');
+    display: flex;
+    width: 80%;
+    height: 80vh;
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    margin-left: 10em;
+    margin-right: 10em;
+    
+}
+
+.loading{
+    color: black;
+    text-shadow: purple;
+    font-family: "Tourney", sans-serif;
+    font-size: larger;
+    font-weight: bolder;
+    margin-top: 30%;
+    size: fit-content;
+}

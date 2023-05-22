@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getGenres, postGames } from "../../redux/actions";
 import Validation from "./Validation";
-import style from './Form.module.css'
+import Style from './Form.module.css'
+import Loader from "../Loader/Loader";
 
 const Form = () => {
   // Constantes y variables
@@ -10,7 +11,9 @@ const Form = () => {
   let allGenres= useSelector(state=>state.genres)
     let z= 1
   // Estados
-  const [genres, setGenres]=useState([])
+
+  const [loading, setLoading]= useState(false)
+  const [genre, setGenre]=useState([])
   const [disable, setDisable]= useState(true)
 
   const [inputs, setInputs] = useState({
@@ -21,7 +24,7 @@ const Form = () => {
     release: "",
     rating: '',
     created: true,
-    genres: [],
+    genre: [],
   });
   const [error, setError] = useState({
     name: "",
@@ -30,11 +33,13 @@ const Form = () => {
     image: "",
     release: "",
     rating: "",
-    genres: "",
+    genre: "",
   });
 
   useEffect(() => {
-    dispatch(getGenres());
+    setLoading(true)
+    dispatch(getGenres())
+    .then(setLoading(false))
   }, [dispatch]);
 
 //handlers
@@ -49,13 +54,13 @@ const handleOnChange = (event) => {
       [event.target.name]: event.target.value
     }))
 
-    if(inputs.name && inputs.description && inputs.rating && genres.length >0 ){ setDisable(false)}
+    if(inputs.name && inputs.description && inputs.rating && genre.length >0 ){ setDisable(false)}
 }
 
 const handleSubmit= (event)=>{
     event.preventDefault();
     console.log(inputs);
-  if(error.name || error.description || error.rating || genres.length === 0){
+  if(error.name || error.description || error.rating || genre.length === 0){
     alert('Something is missing!')
 
   }else dispatch(postGames(inputs))
@@ -67,75 +72,68 @@ const handleSubmit= (event)=>{
       image:'',
       release:'',
       rating:'',
-      genres:[],
+      genre:[],
       created:true,      
     })
-    setGenres([])
+    setGenre([])
 }
 
+if(loading)return <Loader/>
 const handleGenresChanges= event=>{
   if(event.target.checked){
-    setGenres([...genres, event.target.value])
-    setInputs({...inputs, genres:[...genres, event.target.value]})
+    setGenre([...genre, event.target.value])
+    setInputs({...inputs, genre:[...genre, event.target.value]})
   }else {
-    const updatedGenres = genres.filter((g) => g !== genres);
-    setGenres(updatedGenres);
-    setInputs({ ...inputs, genres: updatedGenres });
+    const updatedGenre = genre.filter((g) => g !== genre);
+    setGenre(updatedGenre);
+    setInputs({ ...inputs, genre: updatedGenre });
     } 
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}key='form' className={Style.form}>
+      <span className={Style.tittleNinputC}>
+        <label htmlFor="Name" className={Style.tittles}>Name</label>
+          <input type="text" name="name" value={inputs.name} className={Style.inputs} onChange={handleOnChange} />
+          <p key='errors' className={Style.errors}>{error.name}</p>
+      </span>
       <div>
-        <label htmlFor="Name">Name</label>
-        <input type="text" name="name" value={inputs.name} onChange={handleOnChange} />
-        <p>{error.name}</p>
-      </div>
-       <div>
-        <label htmlFor="Release">Release</label>
-        <input type="date" name="release" onChange={handleOnChange} value={inputs.release} />
-        <p>{error.release}</p>
-      </div>
-      <div>
-          <h1 className={style.genres}>Genres:</h1 >
-            <div className={style.genresOrder}>
+          <label className={Style.tittles}>Genres:</label >
+            <div className={Style.genresOrder}>
               {allGenres.map((e) => (
-                    <div className={style.genresContainer}>
-                      <ul className={style.genrestags}>
-                        <li>
-                          <input
+                <div className={Style.genresContainer}>
+                      <ul className={Style.genrestags}>
+                        <li key='genresList' className={Style.listGenres}>
+                          <input 
                             onChange={handleGenresChanges}
                             type="checkbox"
                             key={'a'+ z++}
                             id={'a'+ z++}
                             value={e.name}
-                          />
-                          <label for={'a'+ z++}>{e.name}</label>
+                            className={Style.inpG}
+                            />
+                          <label for={'a'+ z++} className={Style.genres}>{e.name}</label>
                         </li>
                       </ul>
                     </div>
               ))}
         </div>
+              <p key='errors' className={Style.errors}>{error.genre}</p>
       </div>
-      <div>
-        <label htmlFor="Description">Description</label>
-        <textarea type="text"name="description"placeholder="Write a description here"onChange={handleOnChange} value={inputs.description}>
-        </textarea>
-        <p>{error.description}</p>
-      </div>
-      <div>
-        <label htmlFor="Image">Image</label>
-        <input type="text" name="image" onChange={handleOnChange} value={inputs.image} />
-      </div>
-      <div>
-        <label htmlFor="Rating">Rating</label>
-        <input type="number" name="rating" onChange={handleOnChange} value={inputs.rating} />
-        <p>{error.rating}</p>
-      </div>
-      <div>        
-        <label htmlFor="">Platforms</label>
-        <input type="text" onChange={handleOnChange} value={inputs.platforms} />
-      </div>
-      <button type="submit" disabled={disable} >Submit!</button>
+      <span className={Style.tittleNinputC}>
+        <label htmlFor="Release" className={Style.tittles}>Release</label>
+              <input type="date" name="release" className={Style.release} onChange={handleOnChange} value={inputs.release} />
+        <label htmlFor="Description" className={Style.tittles}>Description</label>
+          <textarea type="text"name="description"placeholder="Write a description here" className={Style.textArea} onChange={handleOnChange} value={inputs.description}></textarea>
+            <p key='errors' className={Style.errors}>{error.description}</p>
+        <label htmlFor="Image" className={Style.tittles}>Image</label>
+          <input type="url" name="image"className={Style.inputs}  onChange={handleOnChange} placeholder='If you want enter an url' value={inputs.image} />
+        <label htmlFor="Rating" className={Style.tittles}>Rating</label>
+          <input type="number" name="rating"className={Style.inputs} placeholder='Add the rate with the arrows'  onChange={handleOnChange} value={inputs.rating} />
+            <p key='errors' className={Style.errors}>{error.rating}</p>   
+        <label htmlFor="" className={Style.tittles}>Platforms</label>
+          <input type="text" className={Style.inputs} name="platforms" onChange={handleOnChange} value={inputs.platforms} />
+      </span>
+        <button type="submit" disabled={disable} >Submit!</button>
     </form>
   );
 }

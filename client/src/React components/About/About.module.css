@@ -1,0 +1,20 @@
+@import url('../../Stetic/Fonts/Fonts.css');
+
+.wrapper{
+    display: flexbox;
+}
+.tittles{
+    color: silver;
+    font-family: "Cinzel", sans-serif;
+}
+
+.devContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.txt{
+    color: grey;
+    width: 40rem;
+    margin-left: 30%;
+}

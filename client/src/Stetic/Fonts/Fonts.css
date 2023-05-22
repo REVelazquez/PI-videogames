@@ -1,0 +1,14 @@
+@font-face{
+    font-family: "Tourney";
+    src: url('./Tourney-VariableFont_wdth\,wght.ttf');
+}
+
+@font-face {
+    font-family: "Cinzel";
+    src: url('./Cinzel/Cinzel-VariableFont_wght.ttf');
+}
+
+@font-face {
+    font-family: "Bruno Ace";
+    src: url("./BrunoAceSC-Regular.ttf");
+}

@@ -65,27 +65,27 @@ const reducer= (state = initialState, {type, payload})=>{
                 filteredGames: filterGenre,
             };
         case RATING_ORDERED_GAMES:
-          const allVideogamesCopy = [...state.allVideogames];
+          const allVideogamesCopy = [...state.filteredGames];
           const orderedGames =
             payload === 'A'
               ? allVideogamesCopy.sort((a, b) => a.rating - b.rating)
               : payload === 'D'
               ? allVideogamesCopy.sort((a, b) => b.rating - a.rating)
-              : [...state.allVideogames];
+              : [...state.filteredGames];
           return {
             ...state,
             filteredGames: orderedGames,
           };
           case LETTERS_ORDERED_GAMES:
-            const allVideogamesCopy2 = [...state.allVideogames];
+            const allVideogamesCopy2 = [...state.filteredGames];
             const orderedGamesByName =
               payload === 'A-Z'
                 ? allVideogamesCopy2.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
                 
                 : payload === 'Z-A'
                 ? allVideogamesCopy2.sort((a, b) => b.name.toLowerCase().localeCompare(a.name.toLowerCase()))
-                : [...state.allVideogames];
-                console.log(allVideogamesCopy2);
+                : [...state.filteredGames];
+
 
             return {
               ...state,

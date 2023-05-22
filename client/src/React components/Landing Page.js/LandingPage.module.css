@@ -1,0 +1,33 @@
+@import url('../../Stetic/Fonts/Fonts.css');
+.link{
+    text-decoration: none;
+}
+.cont{
+    background-image: url('../../Stetic/Images/Landing.png');
+    background-position: center;
+    size: 125%;
+    background-repeat: no-repeat;
+    background-size: 35%;
+
+}
+
+.button{
+    margin-top: 35%;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 5em;
+    font-family: "Tourney", sans-serif;
+    font-weight: bolder;
+    color: aliceblue;
+    background-color: black;
+    border-color: silver;
+    border-width: 6px;
+    text-indent: -9999px;
+}
+.button:hover{
+    background-color: purple;
+    border-color: black;
+    text-indent: 0;
+    width: 15rem;
+    height: 3rem;
+}

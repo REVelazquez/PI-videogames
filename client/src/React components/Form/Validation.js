@@ -31,6 +31,12 @@ const Validation = (inputs)=>{
   }else{
     errors.rating= ''
   }
+  //error en genres
+  if(inputs.genre.length ===1){
+    errors.genre='At least one genre, you need to choose'
+  }else{
+    errors.genre=''
+  }
   return errors
 }
 export default Validation;

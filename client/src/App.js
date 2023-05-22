@@ -5,7 +5,8 @@ import Nav from './React components/Nav/Nav'
 import LandingPage from './React components/Landing Page.js/LandingPage';
 import Detail from './React components/Detail/Detail'
 import Form from './React components/Form/Form';
-import Search from './React components/Search/Search';
+import About from './React components/About/About';
+
 
 
 
@@ -22,7 +23,7 @@ const App = ()=> {
     {location.pathname === '/' ? <LandingPage goToHome={goToHome} /> :<Nav /> }
     <Routes>  
       <Route path='/home' element={<Home />}/>
-      <Route path='/search' element={<Search/>} />
+      <Route path= '/about' element={<About/>}/>
       <Route path='/detail/:id' element={<Detail />} />
       <Route path='/form' element={<Form />} />
     </Routes>

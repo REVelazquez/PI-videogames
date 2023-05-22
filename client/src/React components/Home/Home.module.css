@@ -1,5 +1,12 @@
+@import url('../../Stetic/Fonts/Fonts.css');
 .wrapper{
     display: flex;
+    background-image: url('../../Stetic/Images/—Pngtree—game\ control\ neon\ sign_6014044.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    width: max-content;
+    height: max-content;
 }
 
 .cardsContainer{
@@ -7,6 +14,8 @@
     display: grid;
     grid-template-columns: repeat(5, 300px);
     size: 50%;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
 
@@ -25,11 +34,37 @@
 .selects{
     border-radius: 5%;
     border-color: lightgray;
+    border-style: groove;
+    border-width: medium;
     background-color: black;
     color: grey;
     font-weight: bold;
+    size: 2em;
 }
 .paginateContainer{
     margin-top: 0.5em;
     margin-bottom: 0.5em;
+}
+.conectors{
+    color: silver;
+    margin-top: 0.75em;
+    font-family: "Tourney", sans-serif;
+    font-weight: 700;
+}
+
+.recharge{
+
+        font-family: "Bruno Ace", sans-serif;
+        border-radius: 3em;
+        border-color: silver;
+        color:purple;
+        font-weight: 600;
+        background-color: black;
+    
+}
+
+.recharge:hover{
+    color: black;
+    border-color: purple;
+    background-color: silver;
 }
