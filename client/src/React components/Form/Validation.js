@@ -37,6 +37,12 @@ const Validation = (inputs)=>{
   }else{
     errors.genre=''
   }
+
+  if(inputs.release.length <1){
+    errors.release= 'You must give a release date!'
+  }else{
+    errors.release=''
+  }
   return errors
 }
 export default Validation;

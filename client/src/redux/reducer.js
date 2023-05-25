@@ -35,14 +35,15 @@ const reducer= (state = initialState, {type, payload})=>{
                 ...state,
                 genres: payload,
             };
-        case POST_GAMES:
+      case POST_GAMES:
             return{
                 ...state,
-                allVideogames:[...state.filteredGames, ...payload]
-            }
+                allVideogames:[...state.filteredGames, ...payload],
+                filteredGames:[...state.filteredGames, ...payload]
+            }  
 //casos de ordenamiento o filtrado
         case ORIGIN_FILTERED_GAMES:
-          let allVideogamesDB=state.allVideogames.filter(game=>game.created)
+          let allVideogamesDB=state.allVideogames.filter(game=>(game.created))
           let allVideogamesAPI=state.allVideogames.filter(game=>!game.created)
           return {
             ...state,

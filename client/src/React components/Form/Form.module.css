@@ -3,7 +3,7 @@
 .form{
     background-image: url('../../Stetic/Images/pngaaa.com-3247037.png');
     background-repeat: no-repeat;
-    background-position: right bottom;
+    background-position: right bottom -2em;
 }
 .tittleNinputC{
     display: flex;

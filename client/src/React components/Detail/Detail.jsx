@@ -9,7 +9,6 @@ const Detail = () => {
   let z = 1;
   const dispatch = useDispatch();
   const { id } = useParams();
-
   const [loading, setLoading]= useState(false)
 
   useEffect(() => {
@@ -19,25 +18,28 @@ const Detail = () => {
   },[id, dispatch])
 
   const detail = useSelector(state => state.detail);
-  console.log(detail);
+  console.log({detail});
   const descripcionSinEtiq = detail.description?.replace(/<[^>]+>/g, "");
 
   if(loading) return(<Loader/>)
 
   return (
     <div key='Detail container' className={Style.wrapper}>
-    <h1 key='Title' className={Style.name}>{detail.name}</h1>
+      <h1 key='Title' className={Style.name}>{detail.name}</h1>
       <div key='details' className={Style.details}>
           <h2 key='platTittle' className={Style.ArrayTittles}>Platforms</h2>
           <div key='platCont' className={Style.arrayCont}>
-          {detail.platforms && detail.platforms.map(({platform}) => (
+          {
+          !Array.isArray(detail.platforms)? <p key='Platform created game' className={Style.platformCread}>{detail.platforms}</p>
+          :(detail.platforms && detail.platforms.map(({platform}) => (
             <p key={'a' + z++} value={platform.name} className={Style.arrays}>{platform.name}</p>
-            ))}
+          )))
+          }
         </div>
           <h1 key='GenresTittle' className={Style.ArrayTittles}>Genres</h1>
         <span key='GenresCont' className={Style.arrayCont}>
           {detail.genres && detail.genres.map(genre => (
-            <p key={'a' + z++} value={genre.name} className={Style.arrays}>{genre.name}</p>
+            <p key={'a' + z++} className={Style.arrays}>{genre.name}</p>
           ))}
         </span>
           <div>
@@ -53,7 +55,7 @@ const Detail = () => {
           <h4 className={Style.numbTittle}>Id: </h4>
           <p className={Style.numbers}>{detail.id}</p>
           </span>
-        </div>
+        </div> 
       </div>
   )  
 }

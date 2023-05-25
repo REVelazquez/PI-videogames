@@ -64,10 +64,10 @@ export const getGenres=  ()=>{
 
 //-------------------------action para ruta post---------------------//
 export const postGames= (payload)=>{
-    const url = URL
     return async (dispatch)=>{
         try {
-            let info = await axios.post(url, payload)
+            let info = await axios.post(URL, payload)
+            console.log(info);
             return dispatch({
                 type:POST_GAMES,
                 payload: info.data

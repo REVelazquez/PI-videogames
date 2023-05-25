@@ -39,12 +39,15 @@ const Home = () =>{
     const handleGenreFilter = (event)=>{
         dispatch(filterGamesByGenre(event.target.value))
         setCurrentPage(1)
+        setIndexOfFirstGame(0)
+        setIndexOfLastGame(gamesPerPage)
         
 
       }
       const handleCreatedFilter = (event)=>{
           dispatch(filterGamesByOrigin(event.target.value))
-          
+          setIndexOfFirstGame(0)
+          setIndexOfLastGame(gamesPerPage)
           
         }
         const handleOrderRanking= event=>{

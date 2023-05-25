@@ -99,3 +99,10 @@
     font-family: 'Cinzel', sans-serif;
 }
 
+.platformCread{
+    margin-top: 0.25em;
+    color: silver;
+    font-family: "Bruno Ace";
+    font-weight: 400;
+    justify-content: center;
+}

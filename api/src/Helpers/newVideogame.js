@@ -1,28 +1,31 @@
-
-const { Op } = require('sequelize')
 const {Videogame, Genre}= require ('../db')
+const {Op } = require ('sequelize')
 const newVideogame=async (name, description, platforms, image, release, rating, genre)=>{    
     try {
-
-//con este metodo de sequelize me aseguro de que si hay un videojuego en la db lance el error, ya que devuelve un 
-//valor que no es booleano de otra forma crea un videojuego en la db con los valores recibidos por "default"
-    let [newGame, boolean] = await Videogame.findOrCreate({
+    let newGame;
+    const foundVideogame = await Videogame.findOne({
         where:{
-            name:{
-                [Op.iLike]: `%${name}`
+            name: name            
             },
-        },
-        defaults:{
-            name,
-            description,
-            platforms,
-            image,
-            release,
-            rating,
-            genre,
-        },
+    })  
+    if(foundVideogame) return 'The videogame already exists!';
+    if(!name || !description || !rating || !genre) throw Error('You need an obligatory data') 
+
+    newGame = await Videogame.create({
+        name:name,
+        description:description,
+        platforms:platforms,
+        image:image,
+        release:release,
+        rating:rating,
     })
-    if(!boolean) throw Error('The fame already exist')
+       await genre.forEach(async (genr) => {
+        let newGenre= await Genre.findOne({where: {name:genr}});
+        if (!newGenre) newGenre= await Genre.create({name:genr})
+        await newGame.addGenre(newGenre)
+       });
+        console.log(newGame);
+        return newGame
     } catch (error) {
         return {error:error.message}
     }

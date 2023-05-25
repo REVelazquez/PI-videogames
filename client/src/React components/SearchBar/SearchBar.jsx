@@ -4,6 +4,7 @@ import { getGame } from "../../redux/actions";
 import Style from './SearchBar.module.css'
 import DoABarrelRoll from "./DoABarrelRoll";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../Loader/Loader";
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,6 @@ const SearchBar = () => {
     event.preventDefault();
     setName(event.target.value);
   };
-  const [loading, setLoading]= useState(false)
 
 
   const handleSubmit = (event) => {
@@ -22,20 +22,17 @@ const SearchBar = () => {
     if(+name === 23 || name.toLowerCase() === "do a barrel roll"){
       DoABarrelRoll()
     }
-    console.log(DoABarrelRoll);
     if (name !== "") {
-      setLoading(true)
       location.pathname !== '/home' && navigate('/home')
       dispatch(getGame(name))
-      .then(()=>setLoading(false));
-      setName('')
-
 
     } else {
       alert("A search, to perform,Enter a query");
     }
+    setName('')
     
   };
+
 
   return (
     <form  onSubmit={handleSubmit}  key='searchContainer' className={Style.container}>

@@ -12,7 +12,6 @@ const Form = () => {
     let z= 1
   // Estados
 
-  const [loading, setLoading]= useState(false)
   const [genre, setGenre]=useState([])
   const [disable, setDisable]= useState(true)
 
@@ -23,7 +22,6 @@ const Form = () => {
     image: "",
     release: "",
     rating: '',
-    created: true,
     genre: [],
   });
   const [error, setError] = useState({
@@ -37,9 +35,7 @@ const Form = () => {
   });
 
   useEffect(() => {
-    setLoading(true)
     dispatch(getGenres())
-    .then(setLoading(false))
   }, [dispatch]);
 
 //handlers
@@ -54,16 +50,16 @@ const handleOnChange = (event) => {
       [event.target.name]: event.target.value
     }))
 
-    if(inputs.name && inputs.description && inputs.rating && genre.length >0 ){ setDisable(false)}
+    if(inputs.name && inputs.description && inputs.rating && genre.length >0 && inputs.release ){ setDisable(false)}
 }
 
 const handleSubmit= (event)=>{
     event.preventDefault();
     console.log(inputs);
-  if(error.name || error.description || error.rating || genre.length === 0){
+  if(error.name || error.description || error.rating || genre.length === 0 || error.release){
     alert('Something is missing!')
 
-  }else dispatch(postGames(inputs))
+  }else {dispatch(postGames(inputs))
     alert('Your game has been sumited!')
     setInputs({
       name:'',
@@ -75,10 +71,10 @@ const handleSubmit= (event)=>{
       genre:[],
       created:true,      
     })
-    setGenre([])
+    setGenre([])}
 }
 
-if(loading)return <Loader/>
+
 const handleGenresChanges= event=>{
   if(event.target.checked){
     setGenre([...genre, event.target.value])
@@ -94,7 +90,7 @@ const handleGenresChanges= event=>{
       <span className={Style.tittleNinputC}>
         <label htmlFor="Name" className={Style.tittles}>Name</label>
           <input type="text" name="name" value={inputs.name} className={Style.inputs} onChange={handleOnChange} />
-          <p key='errors' className={Style.errors}>{error.name}</p>
+          <p key='error name' className={Style.errors}>{error.name}</p>
       </span>
       <div>
           <label className={Style.tittles}>Genres:</label >
@@ -117,19 +113,20 @@ const handleGenresChanges= event=>{
                     </div>
               ))}
         </div>
-              <p key='errors' className={Style.errors}>{error.genre}</p>
+              <p key='errors genres' className={Style.errors}>{error.genre}</p>
       </div>
       <span className={Style.tittleNinputC}>
         <label htmlFor="Release" className={Style.tittles}>Release</label>
               <input type="date" name="release" className={Style.release} onChange={handleOnChange} value={inputs.release} />
+              <p key='error release' className={Style.errors}>{error.release}</p> 
         <label htmlFor="Description" className={Style.tittles}>Description</label>
           <textarea type="text"name="description"placeholder="Write a description here" className={Style.textArea} onChange={handleOnChange} value={inputs.description}></textarea>
-            <p key='errors' className={Style.errors}>{error.description}</p>
+            <p key='errors description' className={Style.errors}>{error.description}</p>
         <label htmlFor="Image" className={Style.tittles}>Image</label>
           <input type="url" name="image"className={Style.inputs}  onChange={handleOnChange} placeholder='If you want enter an url' value={inputs.image} />
         <label htmlFor="Rating" className={Style.tittles}>Rating</label>
           <input type="number" name="rating"className={Style.inputs} placeholder='Add the rate with the arrows'  onChange={handleOnChange} value={inputs.rating} />
-            <p key='errors' className={Style.errors}>{error.rating}</p>   
+            <p key='error rating' className={Style.errors}>{error.rating}</p>   
         <label htmlFor="" className={Style.tittles}>Platforms</label>
           <input type="text" className={Style.inputs} name="platforms" onChange={handleOnChange} value={inputs.platforms} />
       </span>

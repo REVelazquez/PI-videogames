@@ -75,7 +75,7 @@
     border-color: grey;
 }
 .navBtn3{
-    background-color: grey;
+    background-color: black;
     background-image: url('../../Stetic/Images/Signo\ About.png');
     background-repeat: no-repeat;
     background-size: 2em 2em;
@@ -85,7 +85,7 @@
     text-indent: -9999px;
     border-radius: 0.7em;
     border-color: purple;
-    color: black;
+    color: silver;
     margin-left: 1em;
     margin-right: 1em;
     font-family: 'Cizel', sans-serif;
@@ -97,7 +97,7 @@
     cursor: pointer;
 }
 .navBtn3:disabled{
-    background-color: rgb(98, 96, 96);
+    background-color: rgb(38, 35, 35);
     height: 2.5em;
     width: 2.5em;
     text-indent: -9999px;
